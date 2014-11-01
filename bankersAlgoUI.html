@@ -1,10 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<!-- 
+tasks pending
+1. error in keypress for only numeric input
+2. validations for empty fields
+3. reset option /enabling buttons accordingly
+ -->
 <style>
-	table{
-		/* width:500px;
-		height:500px; */
-	}
 	table td{
 		padding:0.5px;
 		border:1px solid #ccc;
@@ -12,30 +14,57 @@
 </style>
 
 <form id="bankersForm" name="bankersForm" >
-	No of Processes : <input id="rows" name= "rows"  type="text" /> 
+	<h2 align="center">BANKER'S ALGORITHM</h2>
+	<h4 align="center">Number of processes and resources should be in range of 0-9</h4>
+	<div>
+	<table align="center" style="text-align : left">
+		<tr>
+			<td width="25%">
+				No of Processes 
+			</td>
+			<td width="25%">
+				<input id="rows" name= "rows"  type="text"  readonly="true" maxlength="1" onkeypress="bankersObj.isNumericKey(event);"/> 
+			</td>
+			<td width="25%">
+				No of Resources			
+			</td>
+			<td width="25%">
+			 	<input id="columns" name= "columns"  type="text" readonly="true" maxlength="1" onkeypress="bankersObj.isNumericKey(event);"/> 
+			</td>
+		</tr>
+	</table>
 	<br/>
-	No of Resources : <input id="columns" name= "columns"  type="text" /> 
-	<br/>
-	Enter count of resources which are available : <input type="button" name="btnAvailable" id="btnAvailable" value="Enter Available" onclick="bankersObj.createAvailableTable('availableTable');"/>
+	<center>
+<input type="button" name="btnResourceDtls" id="btnResourceDtls" value="Enter Resources Allocation Details" onclick="bankersObj.createResourceDtlsTable('availableTable','maxAllocTable');" disabled="disabled"/>
+</center>
+</div>
 	<div id="availableTableDiv"></div>
-	Enter max allocations for Resources : <input type="button" name="btnMaxAlloc" id="btnMaxAlloc" value="Enter Max Allocations" onclick="bankersObj.createMaxAllocTable('maxAllocTable');"/>
-	<div id="maxAllocTableDiv"></div>
-	Enter allotted Resources : <input type="button" name="btnAllotted" id="btnAllotted" value="Enter Allotted Resources" onclick="bankersObj.createAllottedTable('allottedTable');"/>
-	<div id="allottedTableDiv"></div>
-	Enter allotted Resources : <input type="button" name="btnCalcNeed" id="btnCalcNeed" value="Calculate Need" onclick="bankersObj.calcNeed();"/>
-	Generate safe states : <input type="button" name="btnGenSafeState" id="btnGenSafeState" value="Generate Safe State" onclick="bankersObj.genSafeState();"/>
-	Display safe states: <input type="button" name="btnDispSafeState" id="btnDispSafeState" value="Display Safe State" onclick="bankersObj.dispSafeState();"/>
+	<div id="maxAllocTableDiv">	</div>
+
+	<br/>
+	<center>
+	<input type="button" name="btnAllotted" id="btnAllotted" value="Enter Allotted Resources" onclick="bankersObj.createAllottedTable('allottedTable');" style="display:none" disabled="true"/>
+	</center>
+
+
+	<div id="allottedTableDiv" ></div>
+
+	<br/>
+	<center>
+	<input type="button" name="btnSafeState" id="btnSafeState" value="Calculate Safe State" onclick="bankersObj.safeStateCalc()" style="display:none" disabled="true"/>
+	</center>
+
+	<div id="safeStateDiv" >
+		<p id="pId" align="center"></p>
+	</div>
 </form>
-
-
-<script src="http://code.jquery.com/jquery-latest.min.js"
-        type="text/javascript"></script>
-<!-- <script type="text/javascript" src="../js/jquery-1.11.1.js"/></script> -->
+<script type="text/javascript" src="jquery-1.11.1.js"/></script> 
 <script type="text/javascript" src="bankersTemplate.js"/></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() 
 	{
 		bankersObj.enableDisableEle(false);
+
 	});
 </script>
 
